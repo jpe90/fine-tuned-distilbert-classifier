@@ -1,6 +1,8 @@
 import torch
 from torch.utils.data import Dataset, DataLoader
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification, AdamW
+import os
+import torch.nn as nn
 
 class TextClassificationDataset(Dataset):
     def __init__(self, texts, labels, tokenizer, max_len):
@@ -132,6 +134,7 @@ def main():
         val_loss, val_acc = evaluate(model, test_dataloader, device)
         print(f'Val loss {val_loss:.4f} accuracy {val_acc:.4f}')
 
+    os.makedirs('model', exist_ok=True)
     torch.save(model.state_dict(), 'model/distilbert_classifier.pth')
     print("Model saved successfully.")
 
